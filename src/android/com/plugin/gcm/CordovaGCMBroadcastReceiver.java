@@ -107,7 +107,7 @@ public class CordovaGCMBroadcastReceiver extends WakefulBroadcastReceiver {
 		NotificationCompat.Builder mBuilder =
 				new NotificationCompat.Builder(context)
 						.setDefaults(defaults)
-						.setSmallIcon(context.getApplicationInfo().icon)
+						.setSmallIcon(getSmallIcon(context, extras))
 						.setWhen(System.currentTimeMillis())
 						.setContentTitle(extras.getString("title"))
 						.setTicker(extras.getString("title"))
@@ -146,5 +146,37 @@ public class CordovaGCMBroadcastReceiver extends WakefulBroadcastReceiver {
 						.getApplicationLabel(context.getApplicationInfo());
 
 		return (String) appName;
+	}
+
+	private int getSmallIcon(Context context, Bundle extras) {
+
+	    int smallIcon = -1;
+
+	    // first try an iconname possible passed in the server payload
+	    final String smallIconNameFromServer = extras.getString("smallIcon");
+	    if (smallIconNameFromServer != null) {
+	      smallIcon = getIconValue(context.getPackageName(), smallIconNameFromServer);
+	    }
+
+	    // try a custom included icon in our bundle named ic_stat_notify(.png)
+	    if (smallIcon == -1) {
+	      smallIcon = getIconValue(context.getPackageName(), "ic_stat_notify");
+	    }
+
+	    // fall back to the regular app icon
+	    if (smallIcon == -1) {
+	      smallIcon = context.getApplicationInfo().icon;
+	    }
+
+	    return smallIcon;
+  	}
+
+	private int getIconValue(String className, String iconName) {
+		try {
+			Class<?> clazz  = Class.forName(className + ".R$drawable");
+			return (Integer) clazz.getDeclaredField(iconName).get(Integer.class);
+		} catch (Exception ignore) {}
+		
+		return -1;
 	}
 }
