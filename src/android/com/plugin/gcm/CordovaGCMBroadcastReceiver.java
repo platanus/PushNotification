@@ -104,11 +104,13 @@ public class CordovaGCMBroadcastReceiver extends WakefulBroadcastReceiver {
 			}
 		}
 
+		Bitmap bm = BitmapFactory.decodeResource(getResources(), context.getApplicationInfo().icon);
+
 		NotificationCompat.Builder mBuilder =
 				new NotificationCompat.Builder(context)
 						.setDefaults(defaults)
 						.setSmallIcon(getSmallIcon(context, extras))
-						.setLargeIcon(context.getApplicationInfo().icon)
+						.setLargeIcon(bm)
 						.setWhen(System.currentTimeMillis())
 						.setContentTitle(extras.getString("title"))
 						.setTicker(extras.getString("title"))
