@@ -1,5 +1,8 @@
 package com.plugin.gcm;
 
+import android.R;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -104,7 +107,7 @@ public class CordovaGCMBroadcastReceiver extends WakefulBroadcastReceiver {
 			}
 		}
 
-		Bitmap bm = BitmapFactory.decodeResource(getResources(), context.getApplicationInfo().icon);
+		Bitmap bm = BitmapFactory.decodeResource(context.getResources(), context.getApplicationInfo().icon);
 
 		NotificationCompat.Builder mBuilder =
 				new NotificationCompat.Builder(context)
