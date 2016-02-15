@@ -34,7 +34,7 @@
 	<!-- android -->
 	<platform name="android">
 
-		<dependency id="com.google.playservices" url="https://github.com/MobileChromeApps/google-play-services.git"/>
+		<dependency id="com.google.playservices" url="https://github.com/platanus/google-play-services"/>
 
 		<config-file target="res/xml/config.xml" parent="/*">
 			<feature name="PushPlugin">
